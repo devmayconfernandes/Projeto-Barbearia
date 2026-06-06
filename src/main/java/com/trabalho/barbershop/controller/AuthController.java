@@ -1,6 +1,7 @@
 package com.trabalho.barbershop.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import com.trabalho.barbershop.dto.AuthRequestDTO;
 import com.trabalho.barbershop.dto.AuthResponseDTO;
@@ -20,5 +21,10 @@ public class AuthController {
     public ResponseEntity<AuthResponseDTO> login(@RequestBody AuthRequestDTO dto) {
         AuthResponseDTO response = service.login(dto);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/gerar-hash/{senha}")
+    public String gerarHash(@PathVariable String senha) {
+        return new BCryptPasswordEncoder().encode(senha);
     }
 }

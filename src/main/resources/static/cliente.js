@@ -48,9 +48,11 @@ async function carregarBarbeiros() {
   const grid = document.getElementById('barbeiros-grid');
   try {
     const list = await apiFetch('/barbeiros');
-    if (!list.length) { grid.innerHTML = '<p class="loading-txt">Nenhum barbeiro disponível</p>'; return; }
+    const barbeiros = list.filter(b => b.tipoUsuario === 'BARBEIRO');
+    
+    if (!barbeiros.length) { grid.innerHTML = '<p class="loading-txt">Nenhum barbeiro disponível</p>'; return; }
 
-    grid.innerHTML = list.map(b => {
+    grid.innerHTML = barbeiros.map(b => {
       const inicial = b.nome.charAt(0).toUpperCase();
       return `
         <label class="barbeiro-card-check" data-id="${b.id}">

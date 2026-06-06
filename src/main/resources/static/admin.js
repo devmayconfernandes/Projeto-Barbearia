@@ -283,7 +283,9 @@ async function initFormAgendamento() {
     const barbeiros = await apiFetch('/barbeiros');
     const sel = document.getElementById('barbeiroId');
     sel.innerHTML = '<option value="">Selecione um barbeiro</option>';
-    barbeiros.forEach(b => { sel.innerHTML += `<option value="${b.id}">${b.nome}</option>`; });
+    barbeiros
+      .filter(b => b.tipoUsuario === 'BARBEIRO')
+      .forEach(b => { sel.innerHTML += `<option value="${b.id}">${b.nome}</option>`; });
     sel.addEventListener('change', () => carregarHorarios(dataInput.value, sel.value));
   } catch {
     document.getElementById('barbeiroId').innerHTML = '<option value="">Erro ao carregar</option>';
